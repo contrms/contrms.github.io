@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Mobile tutorial - Leaflet</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+			width: 600px;
+			height: 400px;
+		}
+	</style>
+
+	<style>body { padding: 0; margin: 0; } #map { height: 100%; width: 100vw; }</style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+	var map = L.map('map').fitWorld();
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(map);
+
+	function onLocationFound(e) {
+		L.marker(e.latlng).addTo(map);
+			}
+
+	function onLocationError(e) {
+		alert(e.message);
+	}
+
+	map.on('locationfound', onLocationFound);
+	map.on('locationerror', onLocationError);
+
+	map.locate({setView: true, maxZoom: 16});
+
+	// create a map overlayer with park map
+	var imageUrl = 'CPD_TrailMaps_2019_PROOF-v2.jpg';
+	var imageBounds = [[40.951072, -89.48828], [40.958958, -89.47721]];
+	var overlay = L.imageOverlay('CPD_TrailMaps_2019_PROOF-v2.jpg', imageBounds)
+	overlay.addTo(map);
+	//creating a icon
+
+	var treeIcon = L.icon({
+	iconUrl: 'tree.png',
+	iconSize:     [32, 37], // size of the icon
+	iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
+	popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
+});
+
+	// Creating a marker
+			 var tree1 = L.marker([40.95520777, -89.48386384], {icon: treeIcon}).bindPopup('Bur Oak');
+			 var tree2 = L.marker([40.95570665, -89.48375404], {icon: treeIcon}).bindPopup('Shingle Oak');
+			 var tree3 = L.marker([40.95604597, -89.48437399], {icon: treeIcon}).bindPopup('Red Oak');
+			 var tree4 = L.marker([40.95659736, -89.48472825], {icon: treeIcon}).bindPopup('White Oak');
+			 var tree5 = L.marker([40.95804270, -89.48552749], {icon: treeIcon}).bindPopup('Black Oak');
+			 var tree6 = L.marker([40.95821562, -89.48577806], {icon: treeIcon}).bindPopup('Shagbark Hickory');
+			 var tree7 = L.marker([40.95743260, -89.48417958], {icon: treeIcon}).bindPopup('Black Cherry');
+			 var tree8 = L.marker([40.95752395, -89.48446903], {icon: treeIcon}).bindPopup('Hackberry');
+
+ // create layer for tree markers
+ var treemarkers = L.layerGroup([tree1,tree2,tree3,tree4,tree5,tree6,tree7,tree8]);
+ treemarkers.addTo(map)
+
+ // Adding marker to the map
+
+
+</script>
+
+
+
+</body>
+</html>
